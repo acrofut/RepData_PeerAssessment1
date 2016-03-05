@@ -5,18 +5,74 @@ output:
     keep_md: true
 ---
 
+## load necessary packages, installing if necessary
+```{r}
+if (!"ggplot2" %in% installed.packages()) install.packages("ggplot2")
+library("ggplot2")
+
+if (!"plyr" %in% installed.packages()) install.packages("plyr")
+library("plyr")
+```
+
 
 ## Loading and preprocessing the data
+```{r}
+rawData <- read.csv(unz("activity.zip", "activity.csv"), header=TRUE, sep=",")
 
+```
 
 
 ## What is mean total number of steps taken per day?
+Total number of steps taken per day
+```{r}
+dailyTotals <- ddply(rawData, c("date"), summarise, sum = sum(steps, na.rm=TRUE))
 
+dailyTotals
+```
+
+Make a histogram of the total number of steps taken each day
+```{r}
+qplot(dailyTotals$sum,
+      geom="histogram",
+      main="Total number of Steps per Day Histogram",
+      xlab = "Steps per Day",
+      fill=I("blue"))
+```
+
+Mean of total number of steps taken per day
+```{r}
+mean(dailyTotals$sum, na.rm=TRUE)
+
+```
+
+Median of total number of steps taken per day
+```{r}
+median(dailyTotals$sum, na.rm=TRUE)
+
+```
 
 
 ## What is the average daily activity pattern?
+Average steps taken during 5-minute interval over all days
+```{r}
+intervalAvg <- ddply(rawData, c("interval"), summarise, mean=mean(steps, na.rm=TRUE))
 
+intervalAvg
 
+```
+
+Time series plot of 5-minute interval and average steps taken
+```{r}
+ggplot(intervalAvg, aes(x=interval, y=mean)) + 
+      geom_line() +
+      xlab("Interval") +
+      ylab("Average over Days")
+```
+
+The 5-minute interval with the highest average steps taken
+```{r}
+intervalAvg[which.max(intervalAvg$mean),]
+```
 
 ## Imputing missing values
 
