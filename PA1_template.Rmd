@@ -7,7 +7,7 @@ output:
 ---
 
 ## load necessary packages, installing if necessary
-```{r}
+```{r libraries}
 if (!"ggplot2" %in% installed.packages()) install.packages("ggplot2")
 library("ggplot2")
 
@@ -21,7 +21,7 @@ library("timeDate")
 
 
 ## Loading and preprocessing the data
-```{r}
+```{r loading}
 rawData <- read.csv(unz("activity.zip", "activity.csv"), header=TRUE, sep=",")
 ```
 
@@ -33,7 +33,7 @@ dailyTotals <- ddply(rawData, c("date"), summarise, sum = sum(steps, na.rm=TRUE)
 ```
 
 Make a histogram of the total number of steps taken each day
-```{r}
+```{r totalHistogram}
 qplot(dailyTotals$sum,
       geom="histogram",
       main="Total number of Steps per Day Histogram",
@@ -59,7 +59,7 @@ intervalAvg <- ddply(rawData, c("interval"), summarise, mean=mean(steps, na.rm=T
 ```
 
 Time series plot of 5-minute interval and average steps taken
-```{r}
+```{r fiveMinuteTS}
 ggplot(intervalAvg, aes(x=interval, y=mean)) + 
       geom_line() +
       xlab("Interval") +
@@ -89,7 +89,7 @@ newDailyTotals <- ddply(dat, c("date"), summarise, sum = sum(steps, na.rm=TRUE))
 ```
 
 Make a histogram of the total number of steps taken each day using replaced NAs
-```{r}
+```{r cleanHistogram}
 qplot(newDailyTotals$sum,
       geom="histogram",
       main="Total number of Steps per Day Histogram with NAs Replaced",
@@ -119,7 +119,7 @@ newIntervalAvg <- ddply(dat, c("interval", "date.type"), summarise, mean=mean(st
 ```
 
 Plot avg steps taken during each interval (weekdays vs weekends) on a panel plot
-```{r}
+```{r panelWeekday}
 p <- ggplot(newIntervalAvg, aes(x=interval, y=mean)) + 
       geom_line() +
       xlab("Interval") +

@@ -39,7 +39,7 @@ qplot(dailyTotals$sum,
       fill=I("blue"))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
+![](PA1_template_files/figure-html/totalHistogram-1.png)
 
 Mean of total number of steps taken per day
 
@@ -78,7 +78,7 @@ ggplot(intervalAvg, aes(x=interval, y=mean)) +
       ylab("Average over Days")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)
+![](PA1_template_files/figure-html/fiveMinuteTS-1.png)
 
 The 5-minute interval with the highest average steps taken
 
@@ -125,7 +125,7 @@ qplot(newDailyTotals$sum,
       fill=I("red"))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png)
+![](PA1_template_files/figure-html/cleanHistogram-1.png)
 
 Mean of total number of steps taken per day with NAs replaced
 
@@ -170,4 +170,4 @@ p <- ggplot(newIntervalAvg, aes(x=interval, y=mean)) +
 p + facet_grid(date.type ~ .)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-18-1.png)
+![](PA1_template_files/figure-html/panelWeekday-1.png)
